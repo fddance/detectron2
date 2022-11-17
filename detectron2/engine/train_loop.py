@@ -157,6 +157,7 @@ class TrainerBase:
                 raise
             finally:
                 self.after_train()
+                torch.cuda.empty_cache()
 
     def before_train(self):
         for h in self._hooks:

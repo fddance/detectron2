@@ -79,7 +79,7 @@ def create_ddp_model(model, *, fp16_compression=False, **kwargs):
     return ddp
 
 
-def default_argument_parser(epilog=None):
+def default_argument_parser(epilog=None, config_file=None, resume=False):
     """
     Create a parser with some common arguments used by detectron2 users.
 
@@ -106,10 +106,11 @@ Run on multiple machines:
 """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--config-file", default="", metavar="FILE", help="path to config file")
+    parser.add_argument("--config-file", default="" if config_file is None else config_file, metavar="FILE", help="path to config file")
     parser.add_argument(
         "--resume",
-        action="store_true",
+        # action="store_true",
+        default=resume,
         help="Whether to attempt to resume from the checkpoint directory. "
         "See documentation of `DefaultTrainer.resume_or_load()` for what it means.",
     )
