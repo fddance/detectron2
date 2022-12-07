@@ -144,7 +144,7 @@ class TrainerBase:
         with EventStorage(start_iter) as self.storage:
             try:
                 self.before_train()
-                for self.iter in range(start_iter, max_iter):
+                for self.iter in range(start_iter, self.temp_max_iter):
                     self.before_step()
                     self.run_step()
                     self.after_step()
@@ -165,8 +165,8 @@ class TrainerBase:
 
     def after_train(self):
         self.storage.iter = self.iter
-        for h in self._hooks:
-            h.after_train()
+        # for h in self._hooks:
+        #     h.after_train()  # todo 暂时删除因为可能会有多次训练
 
     def before_step(self):
         # Maintain the invariant that storage.iter == trainer.iter
